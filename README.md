@@ -1,2 +1,2 @@
 # plc
-This is mysql golang project
+This is sql cloud  golang project
