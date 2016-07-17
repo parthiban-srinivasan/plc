@@ -1,0 +1,19 @@
+application: mygo-1217
+version: 2
+
+runtime: go
+api_version: go1
+
+handlers:
+- url: /.*
+  script: _go_app
+
+##automatic_scaling:
+##  min_num_instances: 1
+#beta_settings:
+#      cloud_sql_instances: "mygo-1217:us-east1:loc-db"
+#[START env]
+#env_variables:
+#  #MYSQL_CONNECTION: user:password@tcp([host]:3306)/dbname
+#   MYSQL_CONNECTION: root:root@tcp(104.196.22.179:3306)/testdb
+#[END env]
