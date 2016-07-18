@@ -32,7 +32,7 @@ func init() {
 	}
 
 	//  Root request is handled here
-	http.HandleFunc("/m", rootHandler)
+	http.HandleFunc("/", rootHandler)
 
 	//  Health check is handled by "healthz" handler
 	http.HandleFunc("/healthy", healthyHandler)
@@ -69,14 +69,14 @@ func healthyHandler(w http.ResponseWriter, r *http.Request) {
 // Warmup request will be handled here.
 func createHandler(w http.ResponseWriter, r *http.Request) {
 
-	create_stmt := `CREATE TABLE IF NOT EXISTS zip (
+	create_stmt := `CREATE TABLE IF NOT EXISTS county (
 				name       VARCHAR(15),
 				state      CHAR(2)
 			)`
 	_, err := db.Exec(create_stmt)
 
 	if err != nil {
-		fmt.Fprint(w, "Failed - County table not created")
+		fmt.Fprint(w, "Failed - County table not created %v", err)
 	} else {
 		fmt.Fprint(w, "County table created")
 	}
