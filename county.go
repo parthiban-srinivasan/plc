@@ -61,11 +61,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-  countyId := r.URL.RawQuery
+	countyId := r.URL.RawQuery
 	if countyId != nil {
 		fmt.Fprint(w, "invalid query parm absent\n")
 		return
-}
+	}
 
 	rA := r.RemoteAddr
 
