@@ -131,7 +131,7 @@ func queryByCountyName(n string) (county, error) {
 
 	var c county
 
-	err := db.QueryRow("SELECT name, state FROM county WHERE name=?", n).Scan(&c)
+	err := db.QueryRow("SELECT name, state FROM county WHERE name=?", n).Scan(&c.name, &c.state)
 
 	return c, err
 }
