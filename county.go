@@ -24,11 +24,11 @@ func init() {
 	//      db, err = sql.Open("mysql", "root:root@tcp(104.196.22.179:3306)/testdb")
 
 	//  Open validates the database arguments without creating connections
-	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb")
+	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb1")
 
 	if err != nil {
-		log.Printf("not good")
-		log.Fatal(err)
+		log.Printf("Database not found, not good")
+		log.Fatal("database not found")
 	}
 
 	//  Root request is handled here

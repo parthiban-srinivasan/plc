@@ -7,7 +7,6 @@ api_version: go1
 
 inbound_services:
 - warmup
-- healthz
 
 handlers:
 - url: /.*
@@ -16,11 +15,9 @@ handlers:
 - url: /_ah/warmup
   script: _go_app
 
-- url: /healthz
-  script: _go_app
+automatic_scaling:
+  min_num_instances: 1
 
-##automatic_scaling:
-##  min_num_instances: 1
 #beta_settings:
 #      cloud_sql_instances: "mygo-1217:us-east1:loc-db"
 #[START env]
