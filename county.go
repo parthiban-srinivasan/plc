@@ -4,7 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-	_ "google.golang.org/appengine"
+  "google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 	"log"
 	"net/http"
 	_ "os"
@@ -31,10 +32,10 @@ func init() {
 	}
 
 	//  Root request is handled here
-	http.HandleFunc("/", rootHandler)
+	http.HandleFunc("/m", rootHandler)
 
 	//  Health check is handled by "healthz" handler
-	http.HandleFunc("/healthz", healthzHandler)
+	http.HandleFunc("/healthy", healthyHandler)
 
 	//  Create table via createhandler
 	http.HandleFunc("/create", createHandler)
@@ -52,7 +53,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // Warmup request will be handled here.
-func healthzHandler(w http.ResponseWriter, r *http.Request) {
+func healthyHandler(w http.ResponseWriter, r *http.Request) {
 
 	//  Test database connection
 	err = db.Ping()
@@ -82,6 +83,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 
 // Warmup request will be handled here.
 func warmupHandler(w http.ResponseWriter, r *http.Request) {
-
+  ctx := appengine.NewContext(r)
+	log.Infof(ctx, "warmup done")
 	fmt.Fprint(w, "Service warmed up")
 }
