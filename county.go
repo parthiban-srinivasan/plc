@@ -2,9 +2,10 @@ package county
 
 import (
 	"database/sql"
+	_ "net/http/pprof"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
-  _ "google.golang.org/appengine"
+	_ "google.golang.org/appengine"
 	_ "google.golang.org/appengine/log"
 	"log"
 	"net/http"
@@ -49,19 +50,25 @@ func init() {
 // Root request will be handled.
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
-  if r.Method != "GET" {
+	if r.Method != "GET" {
 		fmt.Fprint(w, "only GET method allow \n")
 		http.NotFound(w, r)
 		return
 	}
 
-	if r.URL.Path != "/" {
-			fmt.Fprint(w, "only / PATH allow \n")
-			http.NotFound(w, r)
-			return
-		}
+	if r.URL.Path != "/county" {
+		fmt.Fprint(w, "only / PATH allow \n")
+		http.NotFound(w, r)
+		return
+	}
 
-  rA := r.RemoteAddr
+	if r.URL.RawQuery != "/county" {
+		fmt.Fprint(w, "only / PATH allow \n")
+		http.NotFound(w, r)
+		return
+	}
+
+	rA := r.RemoteAddr
 
 	fmt.Fprint(w, "Welcome to County Service %s", rA)
 }
@@ -98,7 +105,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 
 // Warmup request will be handled here.
 func warmupHandler(w http.ResponseWriter, r *http.Request) {
-  // ctx := appengine.NewContext(r)
+	// ctx := appengine.NewContext(r)
 	//log.Infof(ctx, "warmup done")
 	fmt.Fprint(w, "Service warmed up \n")
 }
