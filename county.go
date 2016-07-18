@@ -11,44 +11,77 @@ import (
 	_ "time"
 )
 
-// var db *sql.DB
-// var err error
+var db *sql.DB
+var err error
 
 // Init module...
 func init() {
 
-	        var db *sql.DB
-	        var err error
-
 	//      databaseConfig := os.Getenv("MYSQL_CONNECTION")
-
 
 	//      db, err = sql.Open("mysql", databaseConfig)
 	//      db, err = sql.Open("mysql", "root:root@tcp(104.196.22.179:3306)/testdb")
 
-  //  Open validates the database arguments without creating connections
+	//  Open validates the database arguments without creating connections
 	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb")
 
 	if err != nil {
 		log.Printf("not good")
 		log.Fatal(err)
-  }
+	}
 
-  //  Test database connection
+	//  Root request is handled here
+	http.HandleFunc("/", rootHandler)
+
+	//  Health check is handled by "healthz" handler
+	http.HandleFunc("/healthz", healthzHandler)
+
+	//  Create table via createhandler
+	http.HandleFunc("/create", createHandler)
+
+	//  Warmup of instance (code load during instance creation) is handled by here
+	http.HandleFunc("/_ah/warmup", warmupHandler)
+}
+
+// end of Init function
+
+// Root request will be handled.
+func rootHandler(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Fprint(w, "Welcome to County Service")
+}
+
+// Warmup request will be handled here.
+func healthzHandler(w http.ResponseWriter, r *http.Request) {
+
+	//  Test database connection
 	err = db.Ping()
 
 	if err != nil {
 		log.Fatal(err)
+	} else {
+		fmt.Fprint(w, "Healthy - county service")
 	}
-
-  //  Route request to appropriate handler
-	http.HandleFunc("/", roothandler)
-
 }
-// end of Init function
 
-// Root request will be handled.
-func roothandler(w http.ResponseWriter, r *http.Request) {
+// Warmup request will be handled here.
+func createHandler(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Fprint(w, "Welcome to County Service")
+	create_stmt := `CREATE TABLE IF NOT EXISTS zip (
+				name       VARCHAR(15),
+				state      CHAR(2)
+			)`
+	_, err := db.Exec(create_stmt)
+
+	if err != nil {
+		fmt.Fprint(w, "Failed - County table not created")
+	} else {
+		fmt.Fprint(w, "County table created")
+	}
+}
+
+// Warmup request will be handled here.
+func warmupHandler(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Fprint(w, "Service warmed up")
 }
