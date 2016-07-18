@@ -50,13 +50,13 @@ func init() {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
   if r.Method != "GET" {
-		fmt.Fprint(w, "only GET method allow")
+		fmt.Fprint(w, "only GET method allow \n")
 		http.NotFound(w, r)
 		return
 	}
 
 	if r.URL.Path != "/" {
-			fmt.Fprint(w, "only / PATH allow")
+			fmt.Fprint(w, "only / PATH allow \n")
 			http.NotFound(w, r)
 			return
 		}
@@ -100,5 +100,5 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 func warmupHandler(w http.ResponseWriter, r *http.Request) {
   // ctx := appengine.NewContext(r)
 	//log.Infof(ctx, "warmup done")
-	fmt.Fprint(w, "Service warmed up")
+	fmt.Fprint(w, "Service warmed up \n")
 }
