@@ -15,7 +15,9 @@ handlers:
 - url: /_ah/warmup
   script: _go_app
 
-#automatic_scaling:
+automatic_scaling:
+  Instance_class: F2
+  max_concurrent_requests: 5
 #  min_num_instances: 1
 
 #beta_settings:
