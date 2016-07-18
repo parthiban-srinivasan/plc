@@ -16,6 +16,11 @@ import (
 var db *sql.DB
 var err error
 
+type county struct {
+	name  string
+	state string
+}
+
 // Init module...
 func init() {
 
@@ -62,17 +67,27 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	countyId := r.URL.RawQuery
-	count := strings.Count(countyId, "")
+	countyName := r.URL.RawQuery
+	count := strings.Count(countyName, "")
 
 	if count == 1 {
 		fmt.Fprint(w, "Query parm absent\n")
 		return
 	}
 
-	rA := r.RemoteAddr
+	county, err := queryByCountyName(countyName)
+	//rA := r.RemoteAddr
 
-	fmt.Fprint(w, "Welcome to County Service %s %s", rA, countyId)
+	switch {
+	case err == sql.ErrNoRows:
+		fmt.Fprint(w, "No county with that name\n")
+	case err != nil:
+		//log.Fatal(err)
+		fmt.Fprint(w, "Query by county failed \n")
+	default:
+		fmt.Fprint(w, "Welcome to County Service %s", countyName)
+	}
+
 }
 
 // Warmup request will be handled here.
@@ -110,4 +125,13 @@ func warmupHandler(w http.ResponseWriter, r *http.Request) {
 	// ctx := appengine.NewContext(r)
 	//log.Infof(ctx, "warmup done")
 	fmt.Fprint(w, "Service warmed up \n")
+}
+
+func queryByCountyName(n string) (county, error) {
+
+	var c county
+
+	err := db.QueryRow("SELECT name, state FROM county WHERE name=?", n).Scan(&c)
+
+	return c, err
 }
