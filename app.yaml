@@ -15,6 +15,9 @@ handlers:
 - url: /_ah/warmup
   script: _go_app
 
+- url: /healthz
+  script: _go_app
+
 ##automatic_scaling:
 ##  min_num_instances: 1
 #beta_settings:
