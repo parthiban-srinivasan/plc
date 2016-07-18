@@ -5,7 +5,7 @@ import (
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
   "google.golang.org/appengine"
-	"google.golang.org/appengine/log"
+	_ "google.golang.org/appengine/log"
 	"log"
 	"net/http"
 	_ "os"
@@ -84,6 +84,6 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 // Warmup request will be handled here.
 func warmupHandler(w http.ResponseWriter, r *http.Request) {
   ctx := appengine.NewContext(r)
-	log.Infof(ctx, "warmup done")
+	//log.Infof(ctx, "warmup done")
 	fmt.Fprint(w, "Service warmed up")
 }
