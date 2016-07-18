@@ -69,7 +69,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	rA := r.RemoteAddr
 
-	fmt.Fprint(w, "Welcome to County Service %s", rA)
+	fmt.Fprint(w, "Welcome to County Service %s %s", rA, countryId)
 }
 
 // Warmup request will be handled here.
