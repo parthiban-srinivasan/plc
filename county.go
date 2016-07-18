@@ -59,7 +59,8 @@ func healthyHandler(w http.ResponseWriter, r *http.Request) {
 	err = db.Ping()
 
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		fmt.Fprint(w, "Database failure %v", err)
 	} else {
 		fmt.Fprint(w, "Healthy - county service")
 	}
