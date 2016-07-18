@@ -83,7 +83,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "No county with that name\n")
 	case err != nil:
 		//log.Fatal(err)
-		fmt.Fprint(w, "Query by county failed \n")
+		fmt.Fprint(w, "Query by county failed %v \n", err)
 	default:
 		fmt.Fprint(w, "Welcome to County Service %s", county.name)
 	}
