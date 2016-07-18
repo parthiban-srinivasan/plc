@@ -24,7 +24,7 @@ func init() {
 	//      db, err = sql.Open("mysql", "root:root@tcp(104.196.22.179:3306)/testdb")
 
 	//  Open validates the database arguments without creating connections
-	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb1")
+	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb")
 
 	if err != nil {
 		log.Printf("Database not found, not good")
@@ -49,7 +49,9 @@ func init() {
 // Root request will be handled.
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
-	fmt.Fprint(w, "Welcome to County Service")
+  rA := r.RemoteAddr
+
+	fmt.Fprint(w, "Welcome to County Service %v", rA)
 }
 
 // Warmup request will be handled here.
