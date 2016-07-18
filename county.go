@@ -83,7 +83,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 
 // Warmup request will be handled here.
 func warmupHandler(w http.ResponseWriter, r *http.Request) {
-  ctx := appengine.NewContext(r)
+  _ := appengine.NewContext(r)
 	//log.Infof(ctx, "warmup done")
 	fmt.Fprint(w, "Service warmed up")
 }
