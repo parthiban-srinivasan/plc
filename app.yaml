@@ -1,12 +1,18 @@
 application: mygo-1217
-service: county
+module: county
 version: 2
 
 runtime: go
 api_version: go1
 
+inbound_services:
+- warmup
+
 handlers:
 - url: /.*
+  script: _go_app
+
+- url: /_ah/warmup
   script: _go_app
 
 ##automatic_scaling:

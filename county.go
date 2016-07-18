@@ -1,4 +1,4 @@
-package main
+package county
 
 import (
 	"database/sql"
