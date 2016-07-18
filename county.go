@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	_ "os"
+	"strings"
 	_ "time"
 )
 
@@ -62,14 +63,16 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	countyId := r.URL.RawQuery
-	if countyId != nil {
-		fmt.Fprint(w, "invalid query parm absent\n")
+	count := strings.Count(countyId, "")
+
+	if count == 0 {
+		fmt.Fprint(w, "Query parm absent\n")
 		return
 	}
 
 	rA := r.RemoteAddr
 
-	fmt.Fprint(w, "Welcome to County Service %s %s", rA, countryId)
+	fmt.Fprint(w, "Welcome to County Service %s %s", rA, countyId)
 }
 
 // Warmup request will be handled here.
