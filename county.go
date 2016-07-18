@@ -2,7 +2,6 @@ package county
 
 import (
 	"database/sql"
-	_ "net/http/pprof"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	_ "google.golang.org/appengine"
@@ -62,11 +61,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.URL.RawQuery != "/county" {
-		fmt.Fprint(w, "only / PATH allow \n")
-		http.NotFound(w, r)
+  countyId := r.URL.RawQuery
+	if countyId != nil {
+		fmt.Fprint(w, "invalid query parm absent\n")
 		return
-	}
+}
 
 	rA := r.RemoteAddr
 
