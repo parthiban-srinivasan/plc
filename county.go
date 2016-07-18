@@ -65,7 +65,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	countyId := r.URL.RawQuery
 	count := strings.Count(countyId, "")
 
-	if count == 0 {
+	if count == 1 {
 		fmt.Fprint(w, "Query parm absent\n")
 		return
 	}
