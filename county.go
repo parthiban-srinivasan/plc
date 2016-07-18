@@ -63,7 +63,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
   rA := r.RemoteAddr
 
-	fmt.Fprint(w, "Welcome to County Service %v", rA)
+	fmt.Fprint(w, "Welcome to County Service %s", rA)
 }
 
 // Warmup request will be handled here.
@@ -74,7 +74,7 @@ func healthyHandler(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		//log.Fatal(err)
-		fmt.Fprint(w, "Database failure %v", err)
+		fmt.Fprint(w, "Database failure %s", err)
 	} else {
 		fmt.Fprint(w, "Healthy - county service")
 	}
@@ -90,7 +90,7 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 	_, err := db.Exec(create_stmt)
 
 	if err != nil {
-		fmt.Fprint(w, "Failed - County table not created %v", err)
+		fmt.Fprint(w, "Failed - County table not created %s", err)
 	} else {
 		fmt.Fprint(w, "County table created")
 	}
