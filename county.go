@@ -49,6 +49,18 @@ func init() {
 // Root request will be handled.
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
+  if r.Method != "GET" {
+		fmt.Fprint(w, "only GET method allow")
+		http.NotFound(w, r)
+		return
+	}
+
+	if r.URL.Path != "/" {
+			fmt.Fprint(w, "only / PATH allow")
+			http.NotFound(w, r)
+			return
+		}
+
   rA := r.RemoteAddr
 
 	fmt.Fprint(w, "Welcome to County Service %v", rA)
