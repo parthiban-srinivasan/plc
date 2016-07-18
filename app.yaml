@@ -16,7 +16,7 @@ handlers:
   script: _go_app
 
 automatic_scaling:
-  Instance_class: F2
+  instance_class: F2
   max_concurrent_requests: 5
 #  min_num_instances: 1
 
