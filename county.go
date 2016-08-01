@@ -33,7 +33,7 @@ func init() {
 	db, err = sql.Open("mysql", "root@cloudsql(mygo-1217:us-central1:locdb)/testdb")
 
 	if err != nil {
-		log.Printf("Database not found, not good")
+		log.Printf("Database not found, not good you know")
 		log.Fatal("database not found")
 	}
 
